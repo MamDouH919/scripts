@@ -384,7 +384,7 @@
                 // Check if the display is not 'none'
                 if (displayStyle !== 'none') {
                     // Trigger click event
-                    $('#btnVerifyAppointment').click();
+                    $('#btnSubmit').click();
 
                     // Do something when the validation summary is visible
                     console.log('Validation summary is visible');
