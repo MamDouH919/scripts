@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         LogiNs BLS 
+// @name         Password BLS 
 // @namespace    http://tampermonkey.net/
 // @version      2.5
 // @author       bo3mmar
@@ -17,6 +17,10 @@
         .filter(input => input.offsetParent !== null); // Excludes display: none, visibility: hidden, etc.
 
     visiblePasswordInputs[0].value = password
+
+    window.alert = function () {
+        console.warn('Blocked alert():', ...arguments);
+    };
 
     // if (location.href.indexOf("egypt.blsspainglobal.com") !== -1) {
     //     $("#btnSubmit").show();

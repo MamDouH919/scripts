@@ -318,6 +318,15 @@
             const bot = new SlotSelectionBot();
             bot.start();
 
+            const init = async function () {
+                creatBTN("Hide Loader", ".global-overlay-loader", () => {
+                    HideLoader();
+                    $('#payConfirmModal').modal('hide');
+                    document.getElementById("payConfirm").disabled = false;
+                }, "#f41d18");
+            };
+            init();
+
             const modalElement = document.getElementById('commonModal');
             modalElement.addEventListener('shown.bs.modal', function () {
                 $('#commonModal .modal-footer .btn.btn-success').click();
