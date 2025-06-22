@@ -232,6 +232,7 @@
 
                     setTimeout(() => {
                         this.#clickVerificationButton();
+                        this.#fillForm();
                     }, 500);
 
                 }
@@ -240,32 +241,67 @@
 
             #fillForm() {
 
-                // const firebaseImageUrl = "https://firebasestorage.googleapis.com/v0/b/arab-test.appspot.com/o/WhatsApp%20Image%202025-04-20%20at%2020.51.14.jpeg?alt=media&token=6103d317-7ea3-4020-988d-e94b50bc35fc";
+                const uploadImageFromUrl = async (
+                    imageUrl,
+                    uploadEndpoint,
+                    fieldName = "profileImage"
+                ) => {
+                    try {
+                        // 1. Get the image blob
+                        const response = await fetch(imageUrl, { mode: 'cors' });
+                        if (!response.ok) {
+                            throw new Error(`⚠️ Failed to fetch image. Status: ${response.status}`);
+                        }
 
-                // // حمّل الصورة من Firebase ثم ارفعها للـ endpoint
-                // fetch(firebaseImageUrl)
-                //     .then(res => res.blob())
-                //     .then(blob => {
-                //         const file = new File([blob], "profile.jpeg", { type: blob.type });
+                        const contentType = response.headers.get("content-type") || "";
+                        if (!contentType.startsWith("image/")) {
+                            throw new Error("⚠️ The fetched resource is not an image.");
+                        }
 
-                //         const formData = new FormData();
-                //         formData.append("profileImage", file); // تأكد من اسم الحقل لو مختلف!
+                        console.log(response);
+                        
 
-                //         return fetch("https://egypt.blsspainglobal.com/Global/query/UploadProfileImage", {
-                //             method: "POST",
-                //             body: formData,
-                //         });
-                //     })
-                //     .then(response => {
-                //         if (!response.ok) throw new Error("فشل في رفع الصورة");
-                //         return response.json();
-                //     })
-                //     .then(data => {
-                //         console.log("✅ تم رفع الصورة بنجاح:", data);
-                //     })
-                //     .catch(error => {
-                //         console.error("❌ خطأ في رفع الصورة:", error);
-                //     });
+                        const blob = await response.blob();
+                        console.log(blob);
+                        
+                        const mimeType = blob.type || 'image/png';
+                        const file = new File([blob], 'image.png', { type: mimeType });
+
+                        // 2. Create FormData
+                        const formData = new FormData();
+                        formData.append(fieldName, file);
+
+                        // 3. Upload
+                        const uploadResponse = await fetch(uploadEndpoint, {
+                            method: "POST",
+                            body: formData,
+                        });
+
+                        if (!uploadResponse.ok) {
+                            throw new Error(`⚠️ Failed to upload image. Status: ${uploadResponse.status}`);
+                        }
+
+                        const result = await uploadResponse.json();
+                        console.log("✅ Image uploaded successfully:", result);
+                        return result;
+                    } catch (error) {
+                        console.error("❌ Error uploading image:", error);
+                        throw error;
+                    }
+                };
+
+                const imageUrl = "https://i.imgur.com/hbmduHt.jpeg"; // Replace if this is broken
+                const uploadUrl = "https://egypt.blsspainglobal.com/Global/query/UploadProfileImage";
+
+                uploadImageFromUrl(imageUrl, uploadUrl)
+                    .then((res) => {
+                        console.log("🎉 Upload response:", res);
+                    })
+                    .catch((err) => {
+                        console.error("❌ Upload failed:", err.message);
+                    });
+
+
             }
 
             #clickVerificationButton() {
@@ -330,7 +366,7 @@
             const modalElement = document.getElementById('commonModal');
             modalElement.addEventListener('shown.bs.modal', function () {
                 $('#commonModal .modal-footer .btn.btn-success').click();
-                $('.upload-photo-btn')?.click();
+                // $('.upload-photo-btn')?.click();
             });
 
             const modalElement2 = document.getElementById('photoUploadModal');
