@@ -79,6 +79,7 @@
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// APPLICANT 2 DATA ////////////////////////////////
         //////////////////////////////////////////////////////////////////////////
+        const SurnameAtBirth_1 = "APPLICANT 2 FIRST NAME"; //
         const Firstname1 = "APPLICANT 2 FIRST NAME";
         const Lastname1 = "APPLICANT 2 LAST NAME"
         const surname1 = "Hashem";
@@ -96,6 +97,7 @@
         const PassportType = 'ordinary passport';
         const Passport_Number1 = "A123456789";
         const IssuePlace_1 = "30";
+        const IssueCountryId_1 = "Egypt";
         const PassportIssueDate1 = "2020-10-15";
         const PassportExpiryDate1 = '2027-10-14';
         const PlaceOfBirth_1 = "Alexandria";
@@ -131,6 +133,8 @@
         const InvitingAddress1 = 'Address';
         const InvitingEmail1 = 'something@gmail.com';
         const InvitingContactNo1 = '0123456677';
+        const CostCoveredById_1 = 'By the Applicant himself / herself';
+        const MeansOfSupportId_1 = 'Cash';
         ////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// APPLICANT 3 DATA ///////////////////////////////
@@ -449,6 +453,7 @@
             /////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////
             if (document.getElementById('FirstName_1') !== null) {
+                $("#SurnameAtBirth_1").val(SurnameAtBirth_1);
                 $("#FirstName_1").val(Firstname1);
                 $("#LastName_1").val(Lastname1);
                 $("#SurName_1").val(surname1);
@@ -463,6 +468,13 @@
                 const PassTypee = document.querySelectorAll("#PassportType_1_listbox li");
                 PassTypee.forEach((li) => {
                     if (li.innerHTML.toLowerCase() === PassportType.toLowerCase()) {
+                        li.click();
+                    }
+                })
+
+                const IssueCountry = document.querySelectorAll("#IssueCountryId_1_listbox li");
+                IssueCountry.forEach((li) => {
+                    if (li.innerHTML.toLowerCase().includes(IssueCountryId_1.toLowerCase())) {
                         li.click();
                     }
                 })
@@ -536,7 +548,7 @@
 
                 const InvitingCountryIdd = document.querySelectorAll("#InvitingCountryId_1_listbox li")
                 InvitingCountryIdd.forEach((li) => {
-                    if (li.innerHTML.toLowerCase() == InvitingCountryId_1.toLowerCase()) {
+                    if (li.innerHTML.toLowerCase().includes(InvitingCountryId_1.toLowerCase())) {
                         li.click();
                     }
                 })
@@ -581,6 +593,19 @@
                 const NoEntriesboxx = document.querySelectorAll("#NumberOfEntriesRequested_1_listbox li");
                 NoEntriesboxx.forEach((li) => {
                     if (li.innerHTML.toLowerCase() == NumberOfEntries1.toLowerCase()) {
+                        li.click();
+                    }
+                });
+
+                const CostCovered_1 = document.querySelectorAll("#CostCoveredById_1_listbox li");
+                CostCovered_1.forEach((li) => {
+                    if (li.innerHTML.toLowerCase().includes(CostCoveredById_1.toLowerCase())) {
+                        li.click();
+                    }
+                });
+                const MeansOfSupport_1 = document.querySelectorAll("#MeansOfSupportId_1_listbox li");
+                MeansOfSupport_1.forEach((li) => {
+                    if (li.innerHTML.toLowerCase().includes(MeansOfSupportId_1.toLowerCase())) {
                         li.click();
                     }
                 });
